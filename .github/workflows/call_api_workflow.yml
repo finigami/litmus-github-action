@@ -1,0 +1,19 @@
+name: Trigger qualium-ai API
+
+on:
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  call-api:
+    runs-on: ubuntu-latest
+
+    steps:
+      # - name: Load .env file
+      #   run: |
+      #     source .env
+
+      - name: Call qualium-ai API
+        run: |
+          curl -X GET http://192.168.0.103:6010/api/v1/test/b24b2ec0-a2fb-4b98-8431-e9d59a01b8be \
+            -H "Authorization: Bearer ${{ secrets.API_KEY }}" \
+            -H "Content-Type: application/json"'
