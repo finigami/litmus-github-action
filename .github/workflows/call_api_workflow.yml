@@ -8,8 +8,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 
-
       - name: Call qualium-ai API
         run: |
           curl POST 'https://qualiumdev.finigami.com/api/v1/test/9732bec7-387a-4844-bfc1-52a9a61b1382/run/ai' \
