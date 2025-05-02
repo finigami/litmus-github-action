@@ -13,7 +13,6 @@ jobs:
       #     source .env
 
       - name: Call qualium-ai API
-        print("::Call GET Test API")
         run: |
           curl -X GET http://192.168.0.103:6010/api/v1/test/b24b2ec0-a2fb-4b98-8431-e9d59a01b8be \
             -H "Authorization: Bearer ${{ secrets.API_KEY }}" \
