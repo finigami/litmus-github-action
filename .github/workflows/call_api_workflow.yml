@@ -8,12 +8,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # - name: Load .env file
-      #   run: |
-      #     source .env
+      - name: 
 
       - name: Call qualium-ai API
         run: |
-          curl -X GET http://192.168.0.103:6010/api/v1/test/b24b2ec0-a2fb-4b98-8431-e9d59a01b8be \
-            -H "Authorization: Bearer ${{ secrets.API_KEY }}" \
-            -H "Content-Type: application/json"'
+          curl POST 'https://qualiumdev.finigami.com/api/v1/test/9732bec7-387a-4844-bfc1-52a9a61b1382/run/ai' \
+            --header 'api-key: $secrets.API_KEY'
