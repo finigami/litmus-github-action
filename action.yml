@@ -11,6 +11,10 @@ runs:
   using: "composite"
   steps:
     - uses: actions/checkout@v4
-    - name: Run Python script
-      shell: bash
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+    - name: Run formatter
       run: python GitHubActionsFormatter.py
+      shell: bash
