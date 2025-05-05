@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Run suite run API
         run: |
-          curl POST 'https://qualiumdev.finigami.com/api/v1/suite/9732bec7-387a-4844-bfc1-52a9a61b1382/run' \
+          curl -X POST 'https://qualiumdev.finigami.com/api/v1/suite/9732bec7-387a-4844-bfc1-52a9a61b1382/run' \
             --header 'api-key: $secrets.API_KEY'
 
       - name: Poll suite status data every 10 sec
