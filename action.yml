@@ -8,7 +8,7 @@ inputs:
     description: 'Manas Verma'
     required: true
 runs:
-  using: "python"
+  using: "composite"
   steps:
     - uses: actions/checkout@v4
     - name: Run Python script
