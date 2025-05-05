@@ -1,3 +1,4 @@
+## Call API 
 import logging
 import sys
 
@@ -18,3 +19,5 @@ logger.addHandler(handler)
 logger.info("Deployment started")
 logger.warning("Disk usage is high")
 logger.error("Deployment failed")
+
+

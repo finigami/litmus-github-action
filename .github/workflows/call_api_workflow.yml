@@ -1,4 +1,4 @@
-name: Trigger suite run qualium-ai API
+name: litmus_run
 
 on:
   workflow_dispatch:  # Allows manual trigger

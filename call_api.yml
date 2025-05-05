@@ -1,9 +1,16 @@
-name: 'Custom Action to run qualium-ai API'
-description: 'Run qualium-ai API'
+name: 'litmus_run'
+description: 'Run litmus suite run API'
+# branding:
+#   icon: 'play'
+#   color: 'blue'
 inputs:
   name:
-    description: 'Your name'
+    description: 'Manas Verma'
     required: true
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: "python"
+  steps:
+    - uses: actions/checkout@v4
+    - name: Run Python script
+      shell: bash
+      run: python GitHubActionsFormatter.py
