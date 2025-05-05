@@ -1,4 +1,4 @@
-name: Trigger qualium-ai API
+name: Trigger suite run qualium-ai API
 
 on:
   workflow_dispatch:  # Allows manual trigger
@@ -8,7 +8,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Call qualium-ai API
+      - name: Run suite run API
         run: |
-          curl POST 'https://qualiumdev.finigami.com/api/v1/test/9732bec7-387a-4844-bfc1-52a9a61b1382/run/ai' \
+          curl POST 'https://qualiumdev.finigami.com/api/v1/suite/9732bec7-387a-4844-bfc1-52a9a61b1382/run' \
             --header 'api-key: $secrets.API_KEY'
+
+      - name: Poll suite status data every 10 sec
+        run: |
+            RESPONSE=$(curl GET 'https://qualiumdev.finigami.com/api/v1/suite/9732bec7-387a-4844-bfc1-52a9a61b1382/runs' \
+            --header 'api-key: $secrets.API_KEY')
+            echo "Response from API:"
+            echo "$RESPONSE"      
