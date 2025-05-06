@@ -15,4 +15,3 @@ runs:
   image: Dockerfile
   args:
     - ${{ inputs.custom-text }}
-  architecture: linux/amd64
