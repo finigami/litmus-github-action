@@ -1,13 +1,14 @@
 # Container image that runs your code
-FROM --platform=linux/amd64 alpine:3.18
+FROM --platform=linux/amd64 python:3.9-slim
 
-# Copies your code file from your action repository to the filesystem path `/` of the container
-COPY entrypoint.sh /entrypoint.sh
+# Set working directory
+WORKDIR /app
 
-# Make the entrypoint script executable
-RUN chmod +x /entrypoint.sh
+# Copy the Python script
+COPY main.py /app/
 
-# Code file to execute when the docker container starts up (`entrypoint.sh`)
-ENTRYPOINT ["/entrypoint.sh"]
+# Make the script executable
+RUN chmod +x /app/main.py
 
-CMD ["python3", "main.py"]
+# Set the entrypoint
+ENTRYPOINT ["python3", "/app/main.py"]
