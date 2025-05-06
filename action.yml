@@ -7,7 +7,7 @@ branding:
 
 inputs:
   custom-text:
-    description: "Custom text to echo"
+    description: "Hellooooo world!!!!"
     required: true
 
 runs:
