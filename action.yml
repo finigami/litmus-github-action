@@ -1,24 +1,17 @@
-name: 'litmus_run'
-description: 'Run litmus suite run API'
-# branding:
-#   icon: 'play'
-#   color: 'blue'
+name: "Hello World"
+description: "This is a simple hello world action"
+author: Manas Verma
+branding:
+  icon: "activity"
+  color: "blue"
+
 inputs:
-  name:
-    description: 'Manas Verma'
+  custom-text:
+    description: "Custom text to echo"
     required: true
 
 runs:
-  using: python
-  main: GitHubActionsFormatter.py    
-# runs:
-#   using: "python"
-#   steps:
-#     - uses: actions/checkout@v4
-#     - name: Set up Python
-#       uses: actions/setup-python@v5
-#       with:
-#         python-version: '3.x'
-#     - name: Run formatter
-#       run: python GitHubActionsFormatter.py
-#       shell: bash
+  using: docker
+  image: Dockerfile
+  args:
+    - ${{ inputs.custom-text }}
