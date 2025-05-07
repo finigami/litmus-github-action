@@ -4,6 +4,12 @@ FROM --platform=linux/amd64 python:3.9-slim
 # Set working directory
 WORKDIR /app
 
+# Copy requirements file
+COPY requirements.txt /app/
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
 # Copy the Python script
 COPY main.py /app/
 
