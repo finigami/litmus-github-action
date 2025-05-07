@@ -1,5 +1,5 @@
-name: "Hello World"
-description: "This is a simple hello world action"
+name: "Litmus Suite Run"
+description: "This is workflow for litmus suite run"
 author: Manas Verma
 branding:
   icon: "activity"
@@ -7,11 +7,16 @@ branding:
 
 inputs:
   custom-text:
-    description: "Hellooooo world!!!!"
+    description: "Custom text for the litmus suite run"
+    required: true
+  api-key:
+    description: "API key for authentication"
     required: true
 
 runs:
   using: docker
   image: Dockerfile
+  env:
+    API_KEY: ${{ inputs.api-key }}
   args:
     - ${{ inputs.custom-text }}
