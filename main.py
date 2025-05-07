@@ -3,26 +3,32 @@ import requests
 import os
 
 def main():
-    # Get the custom text from command line arguments
+    # Get the suite run ID from command line arguments
     if len(sys.argv) > 1:
         suite_run_id = sys.argv[1]
-        print(f"Received custom text: {suite_run_id}")
+        print(f"Received suite run ID: {suite_run_id}")
     else:
-        print("No custom text provided")
+        print("No suite run ID provided")
         sys.exit(1)
 
     print("Hello, Github Action World!")
 
-    # Get API key from environment variable
+    # Get API key and base URL from environment variables
     api_key = os.getenv('API_KEY')
+    base_url = os.getenv('LITMUS_API_URL')
+    
     if not api_key:
         print("Error: API_KEY environment variable is not set")
         sys.exit(1)
+    
+    if not base_url:
+        print("Error: LITMUS_API_URL environment variable is not set")
+        sys.exit(1)
 
-    # Call the litmus run API
-    url = "https://qualiumdev.finigami.com/api/v1/suite/suite_run_id/run"
-    print(f'url: {url}')
-    print(f'api_key: {api_key}')
+    # Construct the full URL
+    url = f"{base_url}/{suite_run_id}/run"
+    print(f'URL: {url}')
+    print(f'API Key: {api_key}')
 
     payload = {}
     headers = {

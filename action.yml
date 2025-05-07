@@ -6,17 +6,22 @@ branding:
   color: "blue"
 
 inputs:
-  custom-text:
-    description: "Custom text for the litmus suite run"
+  suite-id:
+    description: "ID of the suite to run"
     required: true
   api-key:
     description: "API key for authentication"
     required: true
+  api-url:
+    description: "Base URL for the Litmus API"
+    required: false
+    default: "https://qualiumdev.finigami.com/api/v1/suite"
 
 runs:
   using: docker
   image: Dockerfile
   env:
     API_KEY: ${{ inputs.api-key }}
+    LITMUS_API_URL: ${{ inputs.api-url }}
   args:
-    - ${{ inputs.custom-text }}
+    - ${{ inputs.suite-id }}

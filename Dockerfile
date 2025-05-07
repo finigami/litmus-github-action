@@ -4,6 +4,10 @@ FROM --platform=linux/amd64 python:3.9-slim
 # Set working directory
 WORKDIR /app
 
+# Set environment variables
+ENV API_KEY=""
+ENV LITMUS_API_URL="https://qualiumdev.finigami.com/api/v1/suite"
+
 # Copy requirements file
 COPY requirements.txt /app/
 
