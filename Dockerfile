@@ -12,3 +12,6 @@ RUN chmod +x /app/main.py
 
 # Set the entrypoint
 ENTRYPOINT ["python3", "/app/main.py"]
+
+# Default command (can be overridden by args)
+CMD []

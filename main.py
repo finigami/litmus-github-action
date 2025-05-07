@@ -1,22 +1,19 @@
-# import logging
-# import sys
+import sys
+import requests
 
-# class GitHubActionsFormatter(logging.Formatter):
-#     def format(self, record):
-#         level = record.levelname.lower()
-#         if level in ["warning", "error", "info", "debug"]:
-#             return f"::{level}::{record.getMessage()}"
-#         return record.getMessage()
+def main():
+    # Get the custom text from command line arguments
+    if len(sys.argv) > 1:
+        custom_text = sys.argv[1]
+        print(f"Received custom text: {custom_text}")
+    else:
+        print("No custom text provided")
+        sys.exit(1)
 
-# handler = logging.StreamHandler(sys.stdout)
-# handler.setFormatter(GitHubActionsFormatter())
+    print("Hello, Github Action World!")
 
-# logger = logging.getLogger("github-actions")
-# logger.setLevel(logging.INFO)
-# logger.addHandler(handler)
+    # Call the litmus run API
 
-# logger.info("Deployment started")
-# logger.warning("Disk usage is high")
-# logger.error("Deployment failed")
+if __name__ == "__main__":
+    main()
 
-print("Hello, Github Action World!")
