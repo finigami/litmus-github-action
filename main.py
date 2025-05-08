@@ -14,7 +14,7 @@ def main():
     print("Hello, Github Action World!")
 
     # Get API key and base URL from environment variables
-    api_key = os.getenv('API_KEY')
+    api_key = os.getenv('LITMUS_API_KEY')
     base_url = os.getenv('LITMUS_API_URL')
     
     if not api_key:
