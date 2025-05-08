@@ -45,8 +45,16 @@ def main():
     while True:
         response = requests.request("GET", get_url, headers=headers, data=payload)
         print(f"Polling response: {response.text}")
-        # if response.json()['status'] == 'completed':
-        #     break
+        ## Check if all suite_runs are completed
+        suite_runs = response.json()['suite_runs']
+        print(f"Suite runs: {suite_runs}")
+        all_completed = True
+        for suite_run in suite_runs:
+            if suite_run['status'] != 'completed':
+                all_completed = False
+
+        if all_completed:
+            break
         time.sleep(10)
 
 if __name__ == "__main__":
