@@ -1,6 +1,7 @@
 import sys
 import requests
 import os
+import time
 
 def main():
     # Get the suite run ID from command line arguments
@@ -37,6 +38,13 @@ def main():
 
     response = requests.request("POST", url, headers=headers, data=payload)
     print(response.text)
+    get_url = f"{base_url}/{suite_run_id}/runs"
+    print(f'Get URL: {get_url}')
+    # Poll the suite every 10 seconds until it is complete
+    while True:
+        response = requests.request("GET", get_url, headers=headers, data=payload)
+        print(response.text)
+        time.sleep(10)
 
 if __name__ == "__main__":
     main()
