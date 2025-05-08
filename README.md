@@ -1,7 +1,7 @@
-# litmus-github-action
+### litmus-github-action
 
-To run this github action, calling repo must pass suite_id.
-LITMUS_API_KEY should be stored in Git Repo as secrets.
+## To run this github action, calling repo must pass suite_id.
+## LITMUS_API_KEY should be stored in Git Repo as secrets.
 
 Steps:
 1. Create .github/workflows folder in repo.
