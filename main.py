@@ -41,10 +41,10 @@ def main():
     get_url = f"{base_url}/{suite_run_id}/runs"
     print(f'Get URL: {get_url}')
     # Poll the suite every 10 seconds until it is complete
-    while True:
-        response = requests.request("GET", get_url, headers=headers, data=payload)
-        print(response.text)
-        time.sleep(10)
+    # while True:
+    response = requests.request("GET", get_url, headers=headers, data=payload)
+    print(response.text)
+        # time.sleep(10)
 
 if __name__ == "__main__":
     main()
