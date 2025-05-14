@@ -6,13 +6,11 @@ import time
 def main():
     # Get the suite run ID from command line arguments
     if len(sys.argv) > 1:
-        suite_run_id = sys.argv[1]
-        print(f"Received suite run ID: {suite_run_id}")
+        suite_id = sys.argv[1]
+        print(f"Running Suite ID:: {suite_id}")
     else:
         print("No suite run ID provided")
         sys.exit(1)
-
-    print("Hello, Github Action World!")
 
     # Get API key and base URL from environment variables
     api_key = os.getenv('LITMUS_API_KEY')
@@ -27,9 +25,7 @@ def main():
         sys.exit(1)
 
     # Construct the full URL
-    url = f"{base_url}/{suite_run_id}/run"
-    print(f'URL: {url}')
-    print(f'API Key: {api_key}')
+    url = f"{base_url}/{suite_id}/run"
 
     payload = {}
     headers = {
@@ -37,20 +33,20 @@ def main():
     }
 
     response = requests.request("POST", url, headers=headers, data=payload)
-    print(response.text)
-
-    get_url = f"{base_url}/{suite_run_id}/runs"
-    print(f'Get URL: {get_url}')
+    print(response.json()['message'])
+    suite_run_id = response.json()['suite_run_id']
+    get_url = f"{base_url}/{suite_id}/run/{suite_run_id}"
     # Poll the suite every 10 seconds until it is complete
+    print(f"Suite ID: {suite_id}")
     while True:
-        response = requests.request("GET", get_url, headers=headers, data=payload)
+        response = requests.request("GET", get_url, headers=headers)
         print(f"Polling response: {response.text}")
-        ## Check if all suite_runs are completed
-        suite_runs = response.json()['suite_runs']
-        print(f"Suite runs: {suite_runs}")
+        ## Check if all testruns are completed
+        testruns = response.json()['testruns']
+        print(f"Suite runs: {testruns}")
         all_completed = True
-        for suite_run in suite_runs:
-            if suite_run['status'] != 'completed':
+        for testrun in testruns:
+            if testrun['status'] != 'success':
                 all_completed = False
 
         if all_completed:
