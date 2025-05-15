@@ -41,15 +41,10 @@ def main():
     while True:
         response = requests.request("GET", get_url, headers=headers)
         print(f"Polling response: {response.text}")
-        ## Check if all testruns are completed
-        testruns = response.json()['testruns']
-        print(f"Suite runs: {testruns}")
-        all_completed = True
-        for testrun in testruns:
-            if testrun['status'] != 'success':
-                all_completed = False
-
-        if all_completed:
+        response_json = response.json()
+        ## Print Total: xx | Success: xx | Failure: xx | Skipped: xx
+        print(f"Total: {response_json['total_tests']} | Success: {response_json['success_count']} | Failure: {response_json['failure_count']} | Skipped: {response_json['skipped_count']}")
+        if response_json['status'] == 'completed':
             break
         time.sleep(10)
 
