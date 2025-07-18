@@ -15,6 +15,8 @@ def main():
     # Get API key and base URL from environment variables
     api_key = os.getenv('LITMUS_API_KEY')
     base_url = os.getenv('LITMUS_API_URL')
+
+    print(f'{base_url} - url to run suite')
     
     if not api_key:
         print("Error: API_KEY environment variable is not set")
