@@ -15,7 +15,7 @@ inputs:
   api-url:
     description: "Base URL for the Litmus API"
     required: false
-    default: "https://qualiumdev.finigami.com/api/v1/suite"
+    default: "https://api.litmuscheck.com/api/v1/suite"
 
 runs:
   using: docker
