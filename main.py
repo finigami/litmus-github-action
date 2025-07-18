@@ -35,6 +35,7 @@ def main():
     }
 
     response = requests.request("POST", url, headers=headers, data=payload)
+    print(response.json())
     print(response.json()['message'])
     suite_run_id = response.json()['suite_run_id']
     get_url = f"{base_url}/{suite_id}/run/{suite_run_id}"
