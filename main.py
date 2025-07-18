@@ -47,6 +47,7 @@ def main():
         response_json = response.json()
         ## Print Total: xx | Success: xx | Failure: xx | Skipped: xx
         print(f"Total: {response_json['total_tests']} | Success: {response_json['success_count']} | Failure: {response_json['failure_count']} | Skipped: {response_json['skipped_count']}")
+        break
         if response_json['status'] == 'completed':
             break
         time.sleep(10)
