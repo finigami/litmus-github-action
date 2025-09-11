@@ -34,7 +34,10 @@ def main():
 
     # Parse config JSON
     try:
-        config = json.loads(config_str)
+        if config_str is not None:
+            config = json.loads(config_str)
+        else:
+            config = None
     except json.JSONDecodeError as e:
         print(f"Error parsing config JSON: {e}")
         sys.exit(1)
