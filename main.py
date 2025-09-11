@@ -16,8 +16,8 @@ def main():
     # Get API key, base URL, config, and environment ID from environment variables
     api_key = os.getenv('LITMUS_API_KEY')
     base_url = os.getenv('LITMUS_API_URL')
-    config_str = os.getenv('LITMUS_CONFIG', None)
-    environment_id = os.getenv('LITMUS_ENVIRONMENT_ID', None)
+    config_str = os.getenv('LITMUS_CONFIG')
+    environment_id = os.getenv('LITMUS_ENVIRONMENT_ID')
 
     print(f'{base_url} - url to run suite')
     
@@ -34,22 +34,23 @@ def main():
 
     # Parse config JSON
     try:
-        if config_str is not None:
+        if config_str and config_str.strip():
             config = json.loads(config_str)
         else:
             config = None
     except json.JSONDecodeError as e:
-        print(f"Error parsing config JSON: {e}")
+        print(f"Malformed config JSON for {config_str}: {e}")
         sys.exit(1)
 
-    # Build payload with config
+    # Build payload
     payload = {}
-
+    
+    # Add config only if it's provided and not empty
     if config is not None:
         payload["config"] = config
     
     # Add environment_id only if it's provided (even if blank)
-    if environment_id is not None:
+    if environment_id is not None and environment_id != '':
         payload["environment_id"] = environment_id
     
     headers = {
