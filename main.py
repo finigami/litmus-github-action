@@ -79,13 +79,13 @@ def main():
             time.sleep(10)
             response = requests.request("GET", get_url, headers=headers)
             response.raise_for_status()  # Raises an HTTPError for bad responses
-            print(f"Polling response: {response.text}")
+            # print(f"Polling response: {response.text}")
             response_json = response.json()
             ## Print Success: xx | Failure: xx | Skipped: xx
-            success_count = response_json.get('success_count', 'N/A')
-            failure_count = response_json.get('failure_count', 'N/A')
-            skipped_count = response_json.get('skipped_count', 'N/A')
-            print(f"Success: {success_count} | Failure: {failure_count} | Skipped: {skipped_count}")
+            success_count = int(response_json.get('success_count', 0))
+            failure_count = int(response_json.get('failure_count', 0))
+            error_count = int(response_json.get('error_count', 0))
+            print(f"Success: {success_count} | Failure: {failure_count} | Error: {error_count}")
             
             if response_json.get('status') == 'completed':
                 # Write the final result to GitHub output
@@ -93,7 +93,14 @@ def main():
                 if github_output_file:
                     with open(github_output_file, 'a') as f:
                         f.write(f"suite-result={json.dumps(response_json)}\n")
-                print(f"Suite completed successfully!")
+                # print(f"Suite completed successfully!")
+                # if failure count is not 0 and error count is not 0, then return failure
+                if failure_count != 0 or error_count != 0:
+                    print(f"Suite completed with failures or errors")
+                    sys.exit(1)
+                else:
+                    print(f"Suite completed successfully!")
+                    sys.exit(0)
                 break
         except requests.exceptions.RequestException as e:
             print(f"Error polling suite status: {e}")
