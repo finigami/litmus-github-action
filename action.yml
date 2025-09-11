@@ -19,7 +19,6 @@ inputs:
   config:
     description: "Configuration object for the suite run (JSON string)"
     required: false
-    default: "{}"
   environment-id:
     description: "Environment ID for the suite run"
     required: false

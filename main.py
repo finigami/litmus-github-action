@@ -40,7 +40,10 @@ def main():
         sys.exit(1)
 
     # Build payload with config
-    payload = {"config": config}
+    payload = {}
+
+    if config is not None:
+        payload["config"] = config
     
     # Add environment_id only if it's provided (even if blank)
     if environment_id is not None:
@@ -52,6 +55,7 @@ def main():
 
     try:
         response = requests.request("POST", url, headers=headers, json=payload)
+        print(f"Response: {response.json()}")
         response.raise_for_status()  # Raises an HTTPError for bad responses
         response_data = response.json()
         print(response_data)
