@@ -16,8 +16,8 @@ def main():
     # Get API key, base URL, config, and environment ID from environment variables
     api_key = os.getenv('LITMUS_API_KEY')
     base_url = os.getenv('LITMUS_API_URL')
-    config_str = os.getenv('LITMUS_CONFIG', '{}')
-    environment_id = os.getenv('LITMUS_ENVIRONMENT_ID')
+    config_str = os.getenv('LITMUS_CONFIG', None)
+    environment_id = os.getenv('LITMUS_ENVIRONMENT_ID', None)
 
     print(f'{base_url} - url to run suite')
     
