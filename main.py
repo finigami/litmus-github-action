@@ -54,7 +54,7 @@ def main():
         payload["environment_id"] = environment_id
     
     headers = {
-        'api-key': api_key
+        'apikey': api_key
     }
 
     try:
@@ -112,4 +112,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
