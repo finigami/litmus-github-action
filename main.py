@@ -55,7 +55,13 @@ def main():
     if environment_name is not None and environment_name != '':
         payload["environment_name"] = environment_name
     if environment_variables is not None and environment_variables != '':
-        payload["environment_variables"] = environment_variables
+        # parse variables json
+        try:
+            env_vars = json.loads(environment_variables)
+        except json.JSONDecodeError as e:
+            print(f"Malformed config JSON for {config_str}: {e}")
+            sys.exit(1)
+        payload["environment_variables"] = env_vars
     
     headers = {
         'apikey': api_key
@@ -116,6 +122,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
