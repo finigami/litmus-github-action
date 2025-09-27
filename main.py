@@ -52,6 +52,10 @@ def main():
     # Add environment_id only if it's provided (even if blank)
     if environment_id is not None and environment_id != '':
         payload["environment_id"] = environment_id
+    if environment_name is not None and environment_name != '':
+        payload["environment_name"] = environment_name
+    if environment_variables is not None and environment_variables != '':
+        payload["environment_variables"] = environment_variables
     
     headers = {
         'apikey': api_key
@@ -112,5 +116,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
