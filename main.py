@@ -18,6 +18,8 @@ def main():
     base_url = os.getenv('LITMUS_API_URL')
     config_str = os.getenv('LITMUS_CONFIG')
     environment_id = os.getenv('LITMUS_ENVIRONMENT_ID')
+    environment_name = os.getenv('LITMUS_ENVIRONMENT_NAME')
+    environment_variables = os.getenv('LITMUS_ENVIRONMENT_VARIABLES')
 
     print(f'{base_url} - url to run suite')
     
@@ -59,7 +61,7 @@ def main():
         try:
             env_vars = json.loads(environment_variables)
         except json.JSONDecodeError as e:
-            print(f"Malformed config JSON for {config_str}: {e}")
+            print(f"environment variables must be valid JSON readable string: {e}")
             sys.exit(1)
         payload["environment_variables"] = env_vars
     
@@ -122,6 +124,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
