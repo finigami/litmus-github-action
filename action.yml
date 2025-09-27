@@ -22,6 +22,12 @@ inputs:
   environment-id:
     description: "Environment ID for the suite run"
     required: false
+  environment-name:
+    description: "Environment by name - only one of id or name should be passed"
+    required: false
+  environment-variables:
+    description: "Additional variables to be used in the environment"
+    required: false
 
 outputs:
   suite-result:
@@ -36,5 +42,8 @@ runs:
     LITMUS_API_URL: ${{ inputs.api-url }}
     LITMUS_CONFIG: ${{ inputs.config }}
     LITMUS_ENVIRONMENT_ID: ${{ inputs.environment-id }}
+    LITMUS_ENVIRONMENT_NAME: ${{ inputs.environment-name }}
+    LITMUS_ENVIRONMENT_VARIABLES: ${{ inputs.environment-variables }}
   args:
     - ${{ inputs.suite-id }}
+
