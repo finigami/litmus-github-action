@@ -24,7 +24,7 @@ def main():
     print(f'{base_url} - url to run suite')
     
     if not api_key:
-        print("Error: API_KEY environment variable is not set")
+        print("Error: LITMUS_API_KEY environment variable is not set")
         sys.exit(1)
     
     if not base_url:
@@ -124,6 +124,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
