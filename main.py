@@ -69,6 +69,7 @@ def main():
         'apikey': api_key
     }
 
+    suite_run_id=""
     try:
         response = requests.request("POST", url, headers=headers, json=payload)
         print(f"Response: {response.json()}")
@@ -86,6 +87,7 @@ def main():
     get_url = f"{base_url}/{suite_id}/run/{suite_run_id}"
     # Poll the suite every 10 seconds until it is complete
     print(f"Suite ID: {suite_id}")
+    print(f"View live run results at: https://www.litmuscheck.com/dashboard/suite/{suite_id}/run/{suite_run_id}")
     while True:
         try:
             time.sleep(10)
@@ -120,10 +122,11 @@ def main():
         except KeyError as e:
             print(f"Unexpected response format during polling: missing key {e}")
             sys.exit(1)
-        
+    print(f"View run results at: https://www.litmuscheck.com/dashboard/suite/{suite_id}/run/{suite_run_id}")
 
 if __name__ == "__main__":
     main()
+
 
 
 
