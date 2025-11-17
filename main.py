@@ -107,6 +107,7 @@ def main():
                 if github_output_file:
                     with open(github_output_file, 'a') as f:
                         f.write(f"suite-result={json.dumps(response_json)}\n")
+                print(f"View run results at: https://www.litmuscheck.com/dashboard/suite/{suite_id}/run/{suite_run_id}")
                 # print(f"Suite completed successfully!")
                 # if failure count is not 0 and error count is not 0, then return failure
                 if failure_count != 0 or error_count != 0:
@@ -122,10 +123,10 @@ def main():
         except KeyError as e:
             print(f"Unexpected response format during polling: missing key {e}")
             sys.exit(1)
-    print(f"View run results at: https://www.litmuscheck.com/dashboard/suite/{suite_id}/run/{suite_run_id}")
 
 if __name__ == "__main__":
     main()
+
 
 
 
