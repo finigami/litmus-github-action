@@ -22,6 +22,15 @@ inputs:
   environment-id:
     description: "Environment ID for the suite run"
     required: false
+  tag-filter-condition:
+    description: "Tag filter condition: 'contains_any' or 'does_not_contain_any'"
+    required: false
+  tag-list:
+    description: "List of tags (JSON array string or comma-separated list)"
+    required: false
+  emails:
+    description: "Email addresses to override suite config emails (JSON array string or comma-separated list)"
+    required: false
 
 outputs:
   suite-result:
@@ -36,5 +45,8 @@ runs:
     LITMUS_API_URL: ${{ inputs.api-url }}
     LITMUS_CONFIG: ${{ inputs.config }}
     LITMUS_ENVIRONMENT_ID: ${{ inputs.environment-id }}
+    LITMUS_TAG_FILTER_CONDITION: ${{ inputs.tag-filter-condition }}
+    LITMUS_TAG_LIST: ${{ inputs.tag-list }}
+    LITMUS_EMAILS: ${{ inputs.emails }}
   args:
     - ${{ inputs.suite-id }}

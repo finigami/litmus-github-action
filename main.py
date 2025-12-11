@@ -18,6 +18,9 @@ def main():
     base_url = os.getenv('LITMUS_API_URL')
     config_str = os.getenv('LITMUS_CONFIG')
     environment_id = os.getenv('LITMUS_ENVIRONMENT_ID')
+    tag_filter_condition = os.getenv('LITMUS_TAG_FILTER_CONDITION')
+    tag_list_str = os.getenv('LITMUS_TAG_LIST')
+    emails_str = os.getenv('LITMUS_EMAILS')
 
     print(f'{base_url} - url to run suite')
     
@@ -52,6 +55,56 @@ def main():
     # Add environment_id only if it's provided (even if blank)
     if environment_id is not None and environment_id != '':
         payload["environment_id"] = environment_id
+    
+    # Parse and validate tag_filter
+    if tag_filter_condition and tag_filter_condition.strip():
+        condition = tag_filter_condition.strip()
+        valid_conditions = ['contains_any', 'does_not_contain_any']
+        
+        if condition not in valid_conditions:
+            print(f"Warning: tag_filter condition '{condition}' is invalid. Must be one of {valid_conditions}. tag_filter will be ignored.")
+        elif not tag_list_str or not tag_list_str.strip():
+            print(f"Warning: tag_filter condition is present but tag_list is empty. tag_filter will be ignored.")
+        else:
+            # Parse tag_list
+            tags = []
+            try:
+                # Try parsing as JSON array first
+                parsed_tags = json.loads(tag_list_str)
+                if isinstance(parsed_tags, list):
+                    tags = parsed_tags
+                else:
+                    # If not a list, try comma-separated string
+                    tags = [tag.strip() for tag in tag_list_str.split(',') if tag.strip()]
+            except json.JSONDecodeError:
+                # If JSON parsing fails, treat as comma-separated string
+                tags = [tag.strip() for tag in tag_list_str.split(',') if tag.strip()]
+            
+            if not tags or len(tags) == 0:
+                print(f"Warning: tag_filter condition is present but tags array is empty. tag_filter will be ignored.")
+            else:
+                payload["tag_filter"] = {
+                    "tags": tags,
+                    "condition": condition
+                }
+    
+    # Parse and add emails
+    if emails_str and emails_str.strip():
+        try:
+            # Try parsing as JSON array first
+            emails = json.loads(emails_str)
+            if isinstance(emails, list):
+                payload["emails"] = emails
+            else:
+                # If not a list, try comma-separated string
+                emails = [email.strip() for email in emails_str.split(',') if email.strip()]
+                if emails:
+                    payload["emails"] = emails
+        except json.JSONDecodeError:
+            # If JSON parsing fails, treat as comma-separated string
+            emails = [email.strip() for email in emails_str.split(',') if email.strip()]
+            if emails:
+                payload["emails"] = emails
     
     headers = {
         'api-key': api_key
