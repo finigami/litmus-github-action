@@ -74,6 +74,51 @@ jobs:
           LITMUS_API_KEY: ${{ secrets.LITMUS_API_KEY}}
 ```
 
+### With Environment Name
+
+```yaml
+name: Run Litmus Tests on Environment by Name
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run_litmus:
+    name: "Run Litmus Suite"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Litmus Suite
+        uses: finigami/litmus-github-action@master
+        with:
+          suite-id: "your-suite-id"
+          environment-name: "production"
+        env:
+          LITMUS_API_KEY: ${{ secrets.LITMUS_API_KEY}}
+```
+
+### With Environment Variables
+
+```yaml
+name: Run Litmus Tests with Environment Variables
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run_litmus:
+    name: "Run Litmus Suite"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Litmus Suite
+        uses: finigami/litmus-github-action@master
+        with:
+          suite-id: "your-suite-id"
+          environment-name: "staging"
+          environment-variables: '{"API_URL":"https://api.example.com","API_KEY":"secret-key"}'
+        env:
+          LITMUS_API_KEY: ${{ secrets.LITMUS_API_KEY}}
+```
+
 ### Complete Example with Both Config and Environment
 
 ```yaml
@@ -94,6 +139,35 @@ jobs:
           suite-id: "your-suite-id"
           config: '{"browser":"chrome","device":{"type":"desktop","device_config":{"os":"windows"}},"viewport":{"width":1920,"height":1080}}'
           environment-id: "your-environment-id"
+        env:
+          LITMUS_API_KEY: ${{ secrets.LITMUS_API_KEY}}
+      
+      - name: Use Suite Results
+        run: |
+          echo "Suite completed with results: ${{ steps.litmus.outputs.suite-result }}"
+```
+
+### Complete Example with Environment Name and Variables
+
+```yaml
+name: Run Litmus Tests - Environment Name with Variables
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run_litmus:
+    name: "Run Litmus Suite"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Litmus Suite
+        id: litmus
+        uses: finigami/litmus-github-action@master
+        with:
+          suite-id: "your-suite-id"
+          config: '{"browser":"chrome","device":{"type":"desktop","device_config":{"os":"windows"}},"viewport":{"width":1920,"height":1080}}'
+          environment-name: "production"
+          environment-variables: '{"API_URL":"https://api.example.com","API_KEY":"secret-key","DEBUG":"false"}'
         env:
           LITMUS_API_KEY: ${{ secrets.LITMUS_API_KEY}}
       
@@ -166,7 +240,8 @@ jobs:
         with:
           suite-id: "your-suite-id"
           config: '{"browser":"chrome","device":{"type":"desktop","device_config":{"os":"windows"}},"viewport":{"width":1920,"height":1080}}'
-          environment-id: "your-environment-id"
+          environment-name: "production"
+          environment-variables: '{"API_URL":"https://api.example.com","API_KEY":"secret-key"}'
           tag-filter-condition: "contains_any"
           tag-list: "prod,smoke"
           emails: "test@example.com,team@example.com"
@@ -186,7 +261,9 @@ jobs:
 | `api-key` | ✅ Yes | - | API key for Litmus authentication |
 | `api-url` | ❌ No | `https://api.litmuscheck.com/api/v1/suite` | Base URL for the Litmus API |
 | `config` | ❌ No | `{}` | Configuration object as JSON string for browser/device settings |
-| `environment-id` | ❌ No | - | Environment ID (UUID) to target specific environment |
+| `environment-id` | ❌ No | - | Environment ID (UUID) to target specific environment. Note: Only one of `environment-id` or `environment-name` should be provided |
+| `environment-name` | ❌ No | - | Environment name to target specific environment. Note: Only one of `environment-id` or `environment-name` should be provided |
+| `environment-variables` | ❌ No | - | Additional variables to be used in the environment (JSON object string) |
 | `tag-filter-condition` | ❌ No | - | Tag filter condition: `contains_any` or `does_not_contain_any` |
 | `tag-list` | ❌ No | - | List of tags (JSON array string or comma-separated list) |
 | `emails` | ❌ No | - | Email addresses to override suite config emails (JSON array string or comma-separated list) |
